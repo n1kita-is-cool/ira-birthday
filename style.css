@@ -1,26 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer Example</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
-    <div class="content">
-        <h1>Welcome to My Website</h1>
-        <p>Some content goes here...</p>
-    </div>
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+    color: white;
 
-    <footer class="footer">
-        <p>&copy; 2025 My Website. All rights reserved.</p>
-        <p>
-            <a href="#">Privacy Policy</a> |
-            <a href="#">Terms of Service</a>
-        </p>
-    </footer>
+    /* Flexbox to make footer stick to bottom */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-</body>
-</html>
+.container {
+    padding: 50px;
+    z-index: 2;
+    flex: 1; /* Push footer to bottom */
+    position: relative;
+}
 
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.balloons {
+    font-size: 4em;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    background-color: white;
+    color: #ff69b4;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #ffe6f0;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+}
+.footer a {
+    color: #4CAF50;
+    text-decoration: none;
+    margin: 0 5px;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
