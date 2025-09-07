@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С днем ​​рождения!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            color: white;
+            overflow: hidden;
+        }
+        .container {
+            padding: 50px;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .balloons {
+            font-size: 4em;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: white;
+            color: #ff69b4;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #ffe6f0;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+   <!--<audio autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-birthdaysong.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio> -->
+
+    <!-- Placeholder for your custom click sound -->
+    <audio id="clickSound">
+        <source src="sound-song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <canvas id="confetti"></canvas>
+
+    <div class="container">
+        <div class="balloons">🎈🎉🎈</div>
+        <h1>С днем ​​рождения, Папа!</h1>
+        <p>Желаю тебе дня, полного радости, любви и смеха. Пусть все твои мечты сбудутся!</p>
+        <button class="button" id="celebrateBtn">Нажми Чтобы Отпраздновать 🎂</button>
+    </div>
+
+     <img src="photo.jpg" alt="photo" style="width:150px;height:300
+        px;">
+
+    <script>
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        const clickSound = document.getElementById('clickSound');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const confettiCount = 150;
+        const confetti = [];
+        let isConfettiActive = false;
+        let animationFrame;
+        let soundPlayed = false;
+
+        for (let i = 0; i < confettiCount; i++) {
+            confetti.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * -canvas.height,
+                r: Math.random() * 6 + 2,
+                d: Math.random() * confettiCount,
+                color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                tilt: Math.random() * 10 - 10,
+                tiltAngleIncremental: Math.random() * 0.07 + .05,
+                tiltAngle: 0,
+                speed: Math.random() * 1 + 0.5
+            });
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach(c => {
+                ctx.beginPath();
+                ctx.lineWidth = c.r;
+                ctx.strokeStyle = c.color;
+                ctx.moveTo(c.x + c.tilt + c.r, c.y);
+                ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r);
+                ctx.stroke();
+            });
+            updateConfetti();
+        }
+
+        function updateConfetti() {
+            confetti.forEach(c => {
+                c.tiltAngle += c.tiltAngleIncremental;
+                c.y += c.speed;
+                c.x += Math.sin(c.d / 50);
+                c.tilt = Math.sin(c.tiltAngle - c.d / 3) * 15;
+
+                if (c.y > canvas.height) {
+                    c.y = Math.random() * -canvas.height;
+                    c.x = Math.random() * canvas.width;
+                }
+            });
+        }
+
+        function animate() {
+            if (!isConfettiActive) return;
+            animationFrame = requestAnimationFrame(animate);
+            drawConfetti();
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        document.getElementById('celebrateBtn').addEventListener('click', () => {
+            if (!soundPlayed) {
+                clickSound.currentTime = 0;
+                clickSound.play();
+                soundPlayed = true;
+            }
+            if (!isConfettiActive) {
+                isConfettiActive = true;
+                animate();
+            }
+        });
+    </script>
+</body>
+</html>
