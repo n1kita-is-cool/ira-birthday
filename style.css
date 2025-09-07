@@ -8,7 +8,6 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ffb6c1, #ff69b4);
     color: white;
-
     /* Flexbox to make footer stick to bottom */
     display: flex;
     flex-direction: column;
